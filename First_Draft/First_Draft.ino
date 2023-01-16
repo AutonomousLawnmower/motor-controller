@@ -40,10 +40,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  while (Serial.available() == 0) {
+  if(Serial.available()) {
+    char data_rcvd = Serial.read();   // read one byte from serial buffer and save to data_rcvd
+    Command_Parse(data_rcvd);
   }
-  char data_rcvd = Serial.read();   // read one byte from serial buffer and save to data_rcvd
-  Command_Parse(data_rcvd);
 }
 
 void Command_Parse(char data){
@@ -70,11 +70,11 @@ void Command_Parse(char data){
     break;
     case '5':
       Serial.print("Blade_Start\n");
-      Blade_Start;
+      Blade_Stop();
     break;
     case '6':
       Serial.print("Blade_Stop\n");
-      Blade_Stop();
+      Blade_Start();
     break;
     default:
       Serial.print("I am in the default for some reason\n");
